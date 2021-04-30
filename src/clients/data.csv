@@ -1,0 +1,3 @@
+id, name, gender, phone, email, address, nationality, dateOfBirth, educationalBackground, preferredModeOfContact
+123123, Bikash Shrestha, M, 9849636369, bikashshrestha.bks@gmail.com, "khadkagaun, kalanki", nepali, 1991-01-29, bachelor, email
+123456, Roji Shrestha, M, 9843713737, rojikarmacharya@gmail.com, "khadkagaun, kalanki", nepali, 1992-06-16, +2, none
