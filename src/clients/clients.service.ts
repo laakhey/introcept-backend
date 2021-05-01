@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Client } from './client.model';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -14,16 +18,6 @@ export class ClientsService {
 
   //header content for CSV file
   private csvHeaders = [
-    // Constant.ID,
-    // Constant.NAME,
-    // Constant.GENDER,
-    // Constant.PHONE,
-    // Constant.EMAIL,
-    // Constant.ADDRESS,
-    // Constant.NATIONALITY,
-    // Constant.DATE_OF_BIRTH,
-    // Constant.EDUCATIONAL_BACKGROUND,
-    // Constant.PREFERRED_MODE_OF_CONTACT,
     'id',
     'name',
     'gender',
@@ -88,8 +82,6 @@ export class ClientsService {
     educationalBackground: string,
     preferredModeOfContact: string,
   ) {
-    // eslint-disable-next-line prefer-rest-params
-    console.log('arguments: ', arguments);
     const id = Date.now();
     const client = new Client(
       id,
@@ -103,9 +95,40 @@ export class ClientsService {
       educationalBackground,
       preferredModeOfContact,
     );
+    this.validateClient(client);
     this.clients.push(client);
     this.addClientToCSV(client);
     return id;
+  }
+
+  private validateClient(client: Client) {
+    if (client.name.length === 0) {
+      throw new BadRequestException('Invalid Name');
+    }
+    if (client.gender.length === 0) {
+      throw new BadRequestException('Invalid Gender');
+    }
+    if (client.email.length === 0) {
+      throw new BadRequestException('Invalid Email');
+    }
+    if (client.phone.length === 0) {
+      throw new BadRequestException('Invalid Phone Number');
+    }
+    if (client.address.length === 0) {
+      throw new BadRequestException('Invalid Address');
+    }
+    if (client.dateOfBirth.length === 0) {
+      throw new BadRequestException('Invalid Date of Birth');
+    }
+    if (client.educationalBackground.length === 0) {
+      throw new BadRequestException('Invalid Educational Background');
+    }
+    if (client.preferredModeOfContact.length === 0) {
+      throw new BadRequestException('Invalid Preferred mode of contact');
+    }
+    if (client.nationality.length === 0) {
+      throw new BadRequestException('Invalid Nationality');
+    }
   }
 
   addClientToCSV(client: Client) {
@@ -144,9 +167,9 @@ export class ClientsService {
     educationalBackground: string,
     preferredModeOfContact: string,
   ) {
+    console.log('updating client with id: ', id);
     const [client, index] = this.findClientById(id);
     const updatedClient = { ...client };
-
     if (name != updatedClient.name) {
       updatedClient.name = name;
     }
@@ -174,6 +197,7 @@ export class ClientsService {
     if (dateOfBirth != updatedClient.dateOfBirth) {
       updatedClient.dateOfBirth = dateOfBirth;
     }
+    this.validateClient(updatedClient);
     this.clients[index] = updatedClient;
     this.updateCsvFile();
     return id;

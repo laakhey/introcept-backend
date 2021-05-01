@@ -12,14 +12,14 @@ export class Client {
     public preferredModeOfContact: string,
   ) {
     this.id = id;
-    this.name = name;
-    this.gender = gender;
-    this.phone = phone;
-    this.email = email;
-    this.address = address;
-    this.nationality = nationality;
-    this.dateOfBirth = dateOfBirth;
-    this.educationalBackground = educationalBackground;
-    this.preferredModeOfContact = preferredModeOfContact;
+    this.name = name.trim();
+    this.gender = gender.trim();
+    this.phone = phone.trim();
+    this.email = email.trim();
+    this.address = address.trim();
+    this.nationality = nationality.trim();
+    this.dateOfBirth = dateOfBirth.trim();
+    this.educationalBackground = educationalBackground.trim();
+    this.preferredModeOfContact = preferredModeOfContact.trim();
   }
 }

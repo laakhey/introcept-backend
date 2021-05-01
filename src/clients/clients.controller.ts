@@ -6,28 +6,22 @@ import {
   Patch,
   Body,
   Param,
+  Header,
+  Res,
 } from '@nestjs/common';
 import { ClientsService } from './clients.service';
 import { Client } from './client.model';
+import * as fs from 'fs';
 import { Constant } from '../constant';
+import * as path from 'path';
 
-@Controller('clients')
+@Controller()
 export class ClientsController {
   constructor(private readonly clientService: ClientsService) {}
 
   // TODO can be received as a object
-  @Post()
+  @Post('clients')
   addClient(
-    // @Body(Constant.NAME) name: string,
-    // @Body(Constant.GENDER) gender: string,
-    // @Body(Constant.PHONE) phone: string,
-    // @Body(Constant.EMAIL) email: string,
-    // @Body(Constant.ADDRESS) address: string,
-    // @Body(Constant.NATIONALITY) nationality: string,
-    // @Body(Constant.DATE_OF_BIRTH) dateOfBirth: string,
-    // @Body(Constant.EDUCATIONAL_BACKGROUND) educationalBackground: string,
-    // @Body(Constant.PREFERRED_MODE_OF_CONTACT) preferredModeOfContact: string,
-
     @Body('name') name: string,
     @Body('gender') gender: string,
     @Body('phone') phone: string,
@@ -51,34 +45,34 @@ export class ClientsController {
     );
   }
 
-  @Get()
+  @Get('clients')
   getAllClients(): Client[] {
     return this.clientService.getAllClients();
   }
 
-  @Get(Constant.ID_PARAMS)
-  getClient(@Param(Constant.ID) id: number): Client {
+  @Get('clients/:id')
+  getClient(@Param('id') id: number): Client {
     return this.clientService.getClient(id);
   }
 
-  @Delete(Constant.ID_PARAMS)
-  deleteClient(@Param(Constant.ID) id: number): string {
+  @Delete('clients/:id')
+  deleteClient(@Param('id') id: number): string {
     return this.clientService.deleteClient(id);
   }
 
   // TODO can be received as a object
-  @Patch(Constant.ID_PARAMS)
+  @Patch('clients/:id')
   updateClient(
-    @Param(Constant.ID) id: number,
-    @Body(Constant.NAME) name: string,
-    @Body(Constant.GENDER) gender: string,
-    @Body(Constant.PHONE) phone: string,
-    @Body(Constant.EMAIL) email: string,
-    @Body(Constant.ADDRESS) address: string,
-    @Body(Constant.NATIONALITY) nationality: string,
-    @Body(Constant.DATE_OF_BIRTH) dateOfBirth: string,
-    @Body(Constant.EDUCATIONAL_BACKGROUND) educationalBackground: string,
-    @Body(Constant.PREFERRED_MODE_OF_CONTACT) preferredModeOfContact: string,
+    @Param('id') id: number,
+    @Body('name') name: string,
+    @Body('gender') gender: string,
+    @Body('phone') phone: string,
+    @Body('email') email: string,
+    @Body('address') address: string,
+    @Body('nationality') nationality: string,
+    @Body('dateOfBirth') dateOfBirth: string,
+    @Body('educationalBackground') educationalBackground: string,
+    @Body('preferredModeOfContact') preferredModeOfContact: string,
   ): number {
     return this.clientService.updateClient(
       id,
@@ -92,5 +86,14 @@ export class ClientsController {
       educationalBackground,
       preferredModeOfContact,
     );
+  }
+
+  @Get('download')
+  @Header('Content-Type', 'text/csv')
+  @Header('Content-Disposition', 'attachment; filename=clients.csv')
+  public downloadCSV(@Res() response) {
+    const csvFilePath = path.resolve(__dirname, Constant.CSV_FILE_PATH);
+    console.log('sending csv files');
+    return fs.createReadStream(csvFilePath).pipe(response);
   }
 }
