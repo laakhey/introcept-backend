@@ -151,7 +151,7 @@ export class ClientsService {
     const offset = Number(page) * Constant.PAGE_LIMIT;
     const clientLength = clients.length;
     const totalPage =
-      clientLength >= Constant.PAGE_LIMIT
+      clientLength > Constant.PAGE_LIMIT
         ? clientLength % Constant.PAGE_LIMIT
         : 1;
     return {
