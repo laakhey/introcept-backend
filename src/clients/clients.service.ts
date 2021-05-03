@@ -146,8 +146,20 @@ export class ClientsService {
       });
   }
 
-  getAllClients() {
-    return [...this.clients];
+  getAllClients(page: number) {
+    const clients = [...this.clients].reverse();
+    const offset = page * Constant.PAGE_LIMIT;
+    const clientLength = clients.length;
+    const totalPage = clientLength % Constant.PAGE_LIMIT;
+    return {
+      elements:
+        totalPage >= page
+          ? clients.slice(offset, offset + Constant.PAGE_LIMIT)
+          : [],
+      page: page,
+      totalElements: clients.length,
+      totalPage: totalPage,
+    };
   }
 
   getClient(id: number) {

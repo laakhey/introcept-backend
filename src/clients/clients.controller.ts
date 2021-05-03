@@ -8,6 +8,8 @@ import {
   Param,
   Header,
   Res,
+  DefaultValuePipe,
+  Query,
 } from '@nestjs/common';
 import { ClientsService } from './clients.service';
 import { Client } from './client.model';
@@ -46,8 +48,8 @@ export class ClientsController {
   }
 
   @Get('clients')
-  getAllClients(): Client[] {
-    return this.clientService.getAllClients();
+  getAllClients(@Query('page', new DefaultValuePipe(0)) page: number): any {
+    return this.clientService.getAllClients(page);
   }
 
   @Get('clients/:id')

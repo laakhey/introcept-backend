@@ -14,4 +14,6 @@ export abstract class Constant {
   static readonly ID_PARAMS: ':id';
 
   static readonly CSV_FILE_PATH = '../assets/data.csv';
+
+  static readonly PAGE_LIMIT = 5;
 }
