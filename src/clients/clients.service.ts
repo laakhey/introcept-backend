@@ -148,9 +148,12 @@ export class ClientsService {
 
   getAllClients(page: number) {
     const clients = [...this.clients].reverse();
-    const offset = page * Constant.PAGE_LIMIT;
+    const offset = Number(page) * Constant.PAGE_LIMIT;
     const clientLength = clients.length;
-    const totalPage = clientLength % Constant.PAGE_LIMIT;
+    const totalPage =
+      clientLength >= Constant.PAGE_LIMIT
+        ? clientLength % Constant.PAGE_LIMIT
+        : 1;
     return {
       elements:
         totalPage >= page
