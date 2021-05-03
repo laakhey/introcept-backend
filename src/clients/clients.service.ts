@@ -152,7 +152,7 @@ export class ClientsService {
     const clientLength = clients.length;
     const totalPage =
       clientLength > Constant.PAGE_LIMIT
-        ? Math.floor(clientLength / Constant.PAGE_LIMIT)
+        ? Math.ceil(clientLength / Constant.PAGE_LIMIT)
         : 1;
     return {
       elements:
@@ -160,7 +160,7 @@ export class ClientsService {
           ? clients.slice(offset, offset + Constant.PAGE_LIMIT)
           : [],
       page: Number(page),
-      totalElements: clients.length,
+      totalElements: clientLength,
       totalPage: totalPage,
     };
   }
