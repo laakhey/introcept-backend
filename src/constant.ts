@@ -15,5 +15,5 @@ export abstract class Constant {
 
   static readonly CSV_FILE_PATH = '../assets/data.csv';
 
-  static readonly PAGE_LIMIT = 5;
+  static readonly PAGE_LIMIT: number = 5;
 }
