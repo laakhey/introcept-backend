@@ -23,8 +23,31 @@
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
+Backend application for saving, updating, reading and deleting client information and creating a csv file.
+This application is build on [Nest](https://github.com/nestjs/nest) framework. 
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This application is hosted on heroku. Please check the demo for this application.
+
+### DEMO
+[https://introcept-backend.herokuapp.com](https://introcept.herokuapp.com)
+
+Front-End application for this application:
+[https://introcept-ui.web.app/](https://introcept-ui.web.app/)
+
+### Available API:
+    
+All the API's are open, so feel free to check.
+
+    1. /clients?page=1 : type GET
+        for fetching clients with page number. Default page is 0 and limit has been set to 5 and cannot be change.
+    2. /clients : type POST
+        for adding client
+    3. /clients/:id : type PATCH
+        for updating client by id
+    4. /clients/:id : type GET
+        for getting client by id
+    5. /download: type GET
+        for downloading clients CSV file
 
 ## Installation
 
@@ -57,6 +80,13 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+## External Dependency
+### fast-csv:
+This dependency is used to create and update csv file.
+
+### cpx:
+On build default CSV file was not being copied to the asset's folder so this dependency is used to copy the file to the asset's folder on building the app.
 
 ## Support
 
